@@ -1,7 +1,7 @@
 
 A first go at getting everything working well with modules, everything major seems to be working.I have not done anything with addons so that needs to be checked.
 Possible to use `export GO111MODULE=on` and `export GOFLAGS=-mod=vendor` for another appreoach but this works for now anyway.
-The `replace` hack means we always use the generated models to render as opposed to gooing to the vendor or repo.
+The `replace` hack means we always use the generated models to render as opposed to going to the vendor or repo.
 
 
 ![My friend, "Gotoro"](ponzu-banner.png)
