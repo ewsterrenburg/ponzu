@@ -9,10 +9,10 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/ponzu-cms/ponzu/system/admin/user"
-	"github.com/ponzu-cms/ponzu/system/api/analytics"
-	"github.com/ponzu-cms/ponzu/system/db"
-	"github.com/ponzu-cms/ponzu/system/item"
+	"github.com/padraicbc/ponzu/system/admin/user"
+	"github.com/padraicbc/ponzu/system/api/analytics"
+	"github.com/padraicbc/ponzu/system/db"
+	"github.com/padraicbc/ponzu/system/item"
 )
 
 var startAdminHTML = `<!doctype html>
@@ -115,6 +115,7 @@ func Admin(view []byte) (_ []byte, err error) {
 	html := startAdminHTML + mainAdminHTML + endAdminHTML
 	tmpl := template.Must(template.New("admin").Parse(html))
 	err = tmpl.Execute(buf, a)
+	fmt.Printf("%+v\n", a)
 	if err != nil {
 		return
 	}

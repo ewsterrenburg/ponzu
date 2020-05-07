@@ -15,12 +15,12 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/ponzu-cms/ponzu/content"
-	"github.com/ponzu-cms/ponzu/system/admin"
-	"github.com/ponzu-cms/ponzu/system/api"
-	"github.com/ponzu-cms/ponzu/system/api/analytics"
-	"github.com/ponzu-cms/ponzu/system/db"
-	"github.com/ponzu-cms/ponzu/system/tls"
+	_ "github.com/padraicbc/ponzu/dynamic/content"
+	"github.com/padraicbc/ponzu/system/admin"
+	"github.com/padraicbc/ponzu/system/api"
+	"github.com/padraicbc/ponzu/system/api/analytics"
+	"github.com/padraicbc/ponzu/system/db"
+	"github.com/padraicbc/ponzu/system/tls"
 
 	"github.com/spf13/cobra"
 )
@@ -100,6 +100,7 @@ $ ponzu run --port=8888 api`,
 		}
 
 		name := buildOutputName()
+		fmt.Println(111111111111111, name)
 		buildPathName := strings.Join([]string{".", name}, string(filepath.Separator))
 		serve := exec.Command(buildPathName,
 			"serve",
@@ -157,7 +158,7 @@ var serveCmd = &cobra.Command{
 		}
 
 		// init search index
-		go db.InitSearchIndex()
+		// go db.InitSearchIndex()
 
 		// save the https port the system is listening on
 		err := db.PutConfig("https_port", fmt.Sprintf("%d", httpsport))

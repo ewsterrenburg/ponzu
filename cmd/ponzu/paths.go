@@ -21,24 +21,20 @@ func buildOutputName() string {
 // resolve GOPATH. In 1.8 can be default, or custom. A custom GOPATH can
 // also contain multiple paths, in which case 'go get' uses the first
 func getGOPATH() (string, error) {
-	var gopath string
-	gopath = os.Getenv("GOPATH")
+	gopath := os.Getenv("GOPATH")
 	if gopath == "" {
 		// not set, find the default
 		usr, err := user.Current()
 		if err != nil {
 			return gopath, err
 		}
-		gopath = filepath.Join(usr.HomeDir, "go")
-	} else {
-		// parse out in case of multiple, retain first
-		if runtime.GOOS == "windows" {
-			gopaths := strings.Split(gopath, ";")
-			gopath = gopaths[0]
-		} else {
-			gopaths := strings.Split(gopath, ":")
-			gopath = gopaths[0]
-		}
+		return filepath.Join(usr.HomeDir, "go"), nil
 	}
-	return gopath, nil
+	// parse out in case of multiple, retain first
+	if runtime.GOOS == "windows" {
+
+		return strings.Split(gopath, ";")[0], nil
+	}
+	return strings.Split(gopath, ":")[0], nil
+
 }

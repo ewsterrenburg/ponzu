@@ -7,12 +7,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ponzu-cms/ponzu/system/cfg"
+	"github.com/padraicbc/ponzu/system/cfg"
 
-	"github.com/ponzu-cms/ponzu/system"
-	"github.com/ponzu-cms/ponzu/system/admin/user"
-	"github.com/ponzu-cms/ponzu/system/api"
-	"github.com/ponzu-cms/ponzu/system/db"
+	"github.com/padraicbc/ponzu/system"
+	"github.com/padraicbc/ponzu/system/admin/user"
+	"github.com/padraicbc/ponzu/system/api"
+	"github.com/padraicbc/ponzu/system/db"
 )
 
 // Run adds Handlers to default http listener for Admin
@@ -49,6 +49,7 @@ func Run() {
 	http.HandleFunc("/admin/edit/upload/delete", user.Auth(deleteUploadHandler))
 
 	staticDir := cfg.AdminStaticDir()
+	fmt.Println(staticDir, "staticdire")
 
 	http.Handle("/admin/static/", db.CacheControl(http.StripPrefix("/admin/static", http.FileServer(restrict(http.Dir(staticDir))))))
 

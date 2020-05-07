@@ -44,18 +44,12 @@ func getAddon(addonPath string) error {
 	}
 
 	// copy to ./addons folder
-	// resolve GOPATH
-	gopath, err := getGOPATH()
-	if err != nil {
-		return addError(err)
-	}
-
 	pwd, err := os.Getwd()
 	if err != nil {
 		return addError(err)
 	}
 
-	src := filepath.Join(gopath, "src", addonPath)
+	src := filepath.Join("src", addonPath)
 
 	// Need to strip the addon name for copyAll?
 	last := filepath.Base(addonPath)

@@ -12,10 +12,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ponzu-cms/ponzu/system/item"
-	"github.com/ponzu-cms/ponzu/system/search"
+	"github.com/padraicbc/ponzu/system/item"
+	bolt "go.etcd.io/bbolt"
 
-	"github.com/boltdb/bolt"
 	"github.com/gofrs/uuid"
 	"github.com/gorilla/schema"
 )
@@ -39,7 +38,7 @@ func SetContent(target string, data url.Values) (int, error) {
 
 	// check if content id == -1 (indicating new post).
 	// if so, run an insert which will assign the next auto incremented int.
-	// this is done because boltdb begins its bucket auto increment value at 0,
+	// this is done because bbolt begins its bucket auto increment value at 0,
 	// which is the zero-value of an int in the Item struct field for ID.
 	// this is a problem when the original first post (with auto ID = 0) gets
 	// overwritten by any new post, originally having no ID, defauting to 0.
@@ -124,14 +123,14 @@ func update(ns, id string, data url.Values, existingContent *[]byte) (int, error
 		return 0, err
 	}
 
-	go func() {
-		// update data in search index
-		target := fmt.Sprintf("%s:%s", ns, id)
-		err = search.UpdateIndex(target, j)
-		if err != nil {
-			log.Println("[search] UpdateIndex Error:", err)
-		}
-	}()
+	// go func() {
+	// 	// update data in search index
+	// 	target := fmt.Sprintf("%s:%s", ns, id)
+	// 	err = search.UpdateIndex(target, j)
+	// 	if err != nil {
+	// 		log.Println("[search] UpdateIndex Error:", err)
+	// 	}
+	// }()
 
 	return cid, nil
 }
@@ -256,14 +255,14 @@ func insert(ns string, data url.Values) (int, error) {
 		return 0, err
 	}
 
-	go func() {
-		// add data to search index
-		target := fmt.Sprintf("%s:%s", ns, cid)
-		err = search.UpdateIndex(target, j)
-		if err != nil {
-			log.Println("[search] UpdateIndex Error:", err)
-		}
-	}()
+	// go func() {
+	// 	// add data to search index
+	// 	target := fmt.Sprintf("%s:%s", ns, cid)
+	// 	err = search.UpdateIndex(target, j)
+	// 	if err != nil {
+	// 		log.Println("[search] UpdateIndex Error:", err)
+	// 	}
+	// }()
 
 	return effectedID, nil
 }
@@ -324,16 +323,16 @@ func DeleteContent(target string) error {
 		return err
 	}
 
-	go func() {
-		// delete indexed data from search index
-		if !strings.Contains(ns, "__") {
-			target = fmt.Sprintf("%s:%s", ns, id)
-			err = search.DeleteIndex(target)
-			if err != nil {
-				log.Println("[search] DeleteIndex Error:", err)
-			}
-		}
-	}()
+	// go func() {
+	// 	// delete indexed data from search index
+	// 	if !strings.Contains(ns, "__") {
+	// 		target = fmt.Sprintf("%s:%s", ns, id)
+	// 		err = search.DeleteIndex(target)
+	// 		if err != nil {
+	// 			log.Println("[search] DeleteIndex Error:", err)
+	// 		}
+	// 	}
+	// }()
 
 	// exception to typical "run in goroutine" pattern:
 	// we want to have an updated admin view as soon as this is deleted, so

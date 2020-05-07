@@ -4,15 +4,15 @@
 package db
 
 import (
+	"fmt"
 	"log"
 	"path/filepath"
 
-	"github.com/ponzu-cms/ponzu/system/cfg"
+	"github.com/padraicbc/ponzu/system/cfg"
+	bolt "go.etcd.io/bbolt"
 
-	"github.com/ponzu-cms/ponzu/system/item"
-	"github.com/ponzu-cms/ponzu/system/search"
+	"github.com/padraicbc/ponzu/system/item"
 
-	"github.com/boltdb/bolt"
 	"github.com/nilslice/jwt"
 )
 
@@ -49,7 +49,7 @@ func Init() {
 	}
 
 	var err error
-	systemDb := filepath.Join(cfg.DataDir(),"system.db")
+	systemDb := filepath.Join(cfg.DataDir(), "system.db")
 	store, err = bolt.Open(systemDb, 0666, nil)
 	if err != nil {
 		log.Fatalln(err)
@@ -57,6 +57,7 @@ func Init() {
 
 	err = store.Update(func(tx *bolt.Tx) error {
 		// initialize db with all content type buckets & sorted bucket for type
+		fmt.Printf("%+v %d\n", item.Types, 11111111)
 		for t := range item.Types {
 			_, err := tx.CreateBucketIfNotExists([]byte(t))
 			if err != nil {
@@ -113,16 +114,16 @@ func AddBucket(name string) {
 // search indexing initialisation in time when there were no item.Types defined so search index was always
 // empty when using addons. We still have no guarentee whatsoever that item.Types is defined
 // Should be called from a goroutine after SetContent is successful (SortContent requirement)
-func InitSearchIndex() {
-	for t := range item.Types {
-		err := search.MapIndex(t)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
-		SortContent(t)
-	}
-}
+// func InitSearchIndex() {
+// 	for t := range item.Types {
+// 		err := search.MapIndex(t)
+// 		if err != nil {
+// 			log.Fatalln(err)
+// 			return
+// 		}
+// 		SortContent(t)
+// 	}
+// }
 
 // SystemInitComplete checks if there is at least 1 admin user in the db which
 // would indicate that the system has been configured to the minimum required.

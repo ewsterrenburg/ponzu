@@ -363,18 +363,18 @@ func generateContentType(args []string) error {
 	name := args[0]
 	fileName := strings.ToLower(name) + ".go"
 
-	// open file in ./content/ dir
+	// open file in ./dynamic/content/ dir
 	// if exists, alert user of conflict
 	pwd, err := os.Getwd()
 	if err != nil {
 		return err
 	}
 
-	contentDir := filepath.Join(pwd, "content")
+	contentDir := filepath.Join(pwd, "dynamic", "content")
 	filePath := filepath.Join(contentDir, fileName)
 
 	if _, err := os.Stat(filePath); !os.IsNotExist(err) {
-		localFile := filepath.Join("content", fileName)
+		localFile := filepath.Join("dynamic", "content", fileName)
 		return fmt.Errorf("Please remove '%s' before executing this command", localFile)
 	}
 

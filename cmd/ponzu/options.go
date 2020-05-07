@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var ponzuRepo = []string{"github.com", "ponzu-cms", "ponzu"}
+var ponzuRepo = []string{"github.com", "padraicbc", "ponzu"}
 
 func getAnswer() (string, error) {
 	var answer string
@@ -28,28 +28,21 @@ func getAnswer() (string, error) {
 }
 
 func vendorCorePackages(path string) error {
-	vendorPath := filepath.Join(path, "cmd", "ponzu", "vendor", "github.com", "ponzu-cms", "ponzu")
+	vendorPath := filepath.Join(path, "vendor", "github.com", "padraicbc", "ponzu")
 	err := os.MkdirAll(vendorPath, os.ModeDir|os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	dirs := []string{"content", "management", "system"}
+	dirs := []string{"management", "system"}
 	for _, dir := range dirs {
 		err = os.Rename(filepath.Join(path, dir), filepath.Join(vendorPath, dir))
 		if err != nil {
 			return err
 		}
 	}
-
-	// create a user content directory at project root
-	contentPath := filepath.Join(path, "content")
-	err = os.Mkdir(contentPath, os.ModeDir|os.ModePerm)
-	if err != nil {
-		return err
-	}
-
 	return nil
+
 }
 
 func copyFileNoRoot(src, dst string) error {
@@ -68,11 +61,8 @@ func copyFileNoRoot(src, dst string) error {
 	}
 
 	_, err = io.Copy(dstFile, srcFile)
-	if err != nil {
-		return err
-	}
+	return err
 
-	return nil
 }
 
 func copyFilesWarnConflicts(srcDir, dstDir string, conflicts []string) error {
@@ -117,11 +107,8 @@ func copyFilesWarnConflicts(srcDir, dstDir string, conflicts []string) error {
 
 		return nil
 	})
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }
 
 func emptyDir(path string) error {
@@ -176,9 +163,6 @@ func copyAll(src, dst string) error {
 
 		return nil
 	})
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }

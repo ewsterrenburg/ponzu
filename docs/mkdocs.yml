@@ -3,7 +3,7 @@ site_name: Ponzu
 docs_dir: src
 site_dir: build
 repo_name: ponzu-cms/ponzu
-repo_url: https://github.com/ponzu-cms/ponzu
+repo_url: https://github.com/padraicbc/ponzu
 
 markdown_extensions:
       - codehilite(linenums=false)

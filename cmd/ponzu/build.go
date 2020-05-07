@@ -1,34 +1,24 @@
 package main
 
 import (
-	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
 )
 
 func buildPonzuServer() error {
-	// copy all ./content files to internal vendor directory
-	src := "content"
-	dst := filepath.Join("cmd", "ponzu", "vendor", "github.com", "ponzu-cms", "ponzu", "content")
-	err := emptyDir(dst)
-	if err != nil {
-		return err
-	}
-	err = copyFilesWarnConflicts(src, dst, []string{"doc.go"})
+	// copy all ./content files to internal directory
+
+	// copy all ./addons files & dirs to internal  directory
+	src := "addons"
+	dst := "vendor"
+
+	err := copyFilesWarnConflicts(src, dst, nil)
 	if err != nil {
 		return err
 	}
 
-	// copy all ./addons files & dirs to internal vendor directory
-	src = "addons"
-	dst = filepath.Join("cmd", "ponzu", "vendor")
-	err = copyFilesWarnConflicts(src, dst, nil)
-	if err != nil {
-		return err
-	}
-
-	// execute go build -o ponzu-cms cmd/ponzu/*.go
+	// execute go build -o ponzu cmd/ponzu/*.go
 	cmdPackageName := strings.Join([]string{".", "cmd", "ponzu"}, "/")
 	buildOptions := []string{"build", "-o", buildOutputName(), cmdPackageName}
 	return execAndWait(gocmd, buildOptions...)
