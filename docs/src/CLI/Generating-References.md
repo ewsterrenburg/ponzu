@@ -68,7 +68,7 @@ package content
 import (
 	"fmt"
 
-	"github.com/bosssauce/reference"
+	"github.com/padraicbc/reference"
 
 	"github.com/padraicbc/ponzu/management/editor"
 	"github.com/padraicbc/ponzu/system/item"
