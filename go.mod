@@ -30,7 +30,6 @@ require (
 	github.com/nilslice/jwt v1.0.0
 	github.com/onsi/ginkgo v1.10.3 // indirect
 	github.com/onsi/gomega v1.7.1 // indirect
-	github.com/padraicbc/ponzu-mod/dynamic/content v0.0.0-20200507181826-43538f6ec1f8 // indirect
 	github.com/padraicbc/ponzu/dynamic/content v0.0.0-20200507182637-406aa94d1994
 	github.com/prometheus/common v0.4.0
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
