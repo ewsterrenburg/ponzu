@@ -115,7 +115,6 @@ func Admin(view []byte) (_ []byte, err error) {
 	html := startAdminHTML + mainAdminHTML + endAdminHTML
 	tmpl := template.Must(template.New("admin").Parse(html))
 	err = tmpl.Execute(buf, a)
-	fmt.Printf("%+v\n", a)
 	if err != nil {
 		return
 	}

@@ -4,7 +4,6 @@
 package db
 
 import (
-	"fmt"
 	"log"
 	"path/filepath"
 
@@ -57,7 +56,6 @@ func Init() {
 
 	err = store.Update(func(tx *bolt.Tx) error {
 		// initialize db with all content type buckets & sorted bucket for type
-		fmt.Printf("%+v %d\n", item.Types, 11111111)
 		for t := range item.Types {
 			_, err := tx.CreateBucketIfNotExists([]byte(t))
 			if err != nil {
