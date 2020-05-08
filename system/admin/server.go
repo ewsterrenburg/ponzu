@@ -49,7 +49,6 @@ func Run() {
 	http.HandleFunc("/admin/edit/upload/delete", user.Auth(deleteUploadHandler))
 
 	staticDir := cfg.AdminStaticDir()
-	fmt.Println(staticDir, "staticdire")
 
 	http.Handle("/admin/static/", db.CacheControl(http.StripPrefix("/admin/static", http.FileServer(restrict(http.Dir(staticDir))))))
 

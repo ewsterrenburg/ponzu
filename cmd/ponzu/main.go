@@ -100,7 +100,7 @@ $ ponzu run --port=8888 api`,
 		}
 
 		name := buildOutputName()
-		fmt.Println(111111111111111, name)
+
 		buildPathName := strings.Join([]string{".", name}, string(filepath.Separator))
 		serve := exec.Command(buildPathName,
 			"serve",
