@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/padraicbc/ponzu/dynamic/content"
+	_ "github.com/padraicbc/ponzu/content"
 	"github.com/padraicbc/ponzu/system/admin"
 	"github.com/padraicbc/ponzu/system/api"
 	"github.com/padraicbc/ponzu/system/api/analytics"

@@ -2,14 +2,6 @@ module github.com/padraicbc/ponzu
 
 go 1.13
 
-// Hacks for now, need to trace back which packages pull in problems
-// but seems quite a few so eaasier do this for now
-replace gopkg.in/fsnotify.v1 => github.com/fsnotify/fsnotify v1.4.9
-
-replace github.com/nats-io/go-nats => github.com/nats-io/nats.go v1.9.1
-
-replace github.com/onsi/gomega => github.com/onsi/gomega v1.9.0
-
 require (
 	github.com/RoaringBitmap/roaring v0.4.23 // indirect
 	github.com/blevesearch/bleve v1.0.7
@@ -30,8 +22,7 @@ require (
 	github.com/nilslice/jwt v1.0.0
 	github.com/onsi/ginkgo v1.10.3 // indirect
 	github.com/onsi/gomega v1.7.1 // indirect
-	github.com/padraicbc/ponzu/dynamic/content v0.0.0-20200507182637-406aa94d1994
-	github.com/prometheus/common v0.4.0
+	github.com/padraicbc/ponzu/content v0.0.0-00010101000000-000000000000
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5 // indirect
@@ -49,5 +40,5 @@ require (
 )
 
 // Used only in builds, could add the import and forget about it here
-// but just as easy do the 	_ "github.com/padraicbc/ponzu/dynamic/content" import in main now
-replace github.com/padraicbc/ponzu/dynamic/content => ./dynamic/content
+// but just as easy do the 	_ "github.com/padraicbc/ponzu/content" import in main now
+replace github.com/padraicbc/ponzu/content => ./content

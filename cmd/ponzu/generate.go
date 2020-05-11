@@ -363,14 +363,14 @@ func generateContentType(args []string) error {
 	name := args[0]
 	fileName := strings.ToLower(name) + ".go"
 
-	// open file in ./dynamic/content/ dir
+	// open file in ./content/ dir
 	// if exists, alert user of conflict
 	pwd, err := os.Getwd()
 	if err != nil {
 		return err
 	}
 
-	filePath := filepath.Join(pwd, "dynamic", "content", fileName)
+	filePath := filepath.Join(pwd, "content", fileName)
 
 	if _, err := os.Stat(filePath); !os.IsNotExist(err) {
 		fmt.Printf("File %s exists!\nPress [Y/y] to overwrite or any key to cancel: ", filePath)

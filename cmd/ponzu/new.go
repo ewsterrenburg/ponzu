@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/prometheus/common/log"
 	"github.com/spf13/cobra"
 )
 
@@ -72,62 +71,25 @@ func newProjectInDir(path string) error {
 }
 
 func createProjectInDir(path string) error {
-	gopath, err := getGOPATH()
-	if err != nil {
-		return err
-	}
+
 	repo := ponzuRepo
 
-	local := filepath.Join(gopath, "src", filepath.Join(repo...))
-
-	localMod := filepath.Join(gopath, "pkg/mod", filepath.Join(repo...))
 	network := "https://" + strings.Join(repo, "/") + ".git"
 
 	// create the directory or overwrite it
-	err = os.MkdirAll(path, os.ModeDir|os.ModePerm)
+	err := os.MkdirAll(path, os.ModeDir|os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	if dev {
-		if fork != "" {
-			local = filepath.Join(gopath, "src", fork)
-		}
+	// try to git clone the repository over the network
 
-		err = execAndWait("git", "clone", local, "--branch", "ponzu-dev", "--single-branch", path)
-		if err != nil {
-			return err
-		}
+	err = execAndWait("git", "clone", network, path)
 
-		err = vendorCorePackages(path)
-		if err != nil {
-			return err
-		}
-
-		fmt.Println("Dev build cloned from " + local + ":ponzu-dev")
-		return nil
-	}
-
-	// try to git clone the repository from the local machine's $GOPATH
-	err = execAndWait("git", "clone", local, path)
 	if err != nil {
-
-		fmt.Println("Couldn't clone from", local, "- trying modules...")
-		err = execAndWait("git", "clone", localMod, path)
-		if err != nil {
-
-			fmt.Println("Couldn't clone from", local, "- trying network...", network)
-
-			// try to git clone the repository over the network
-
-			err = execAndWait("git", "clone", network, path)
-
-			if err != nil {
-				fmt.Println("Network clone failure.")
-				// failed
-				return fmt.Errorf("Failed to clone files from local machine [%s] and over the network [%s].\n%s", local, network, err)
-			}
-		}
+		fmt.Println("Network clone failure.")
+		// failed
+		return fmt.Errorf("Failed to clone files from  network [%s].\n%s", network, err)
 	}
 
 	// create an directory in ./cmd/ponzu and move content,
@@ -150,11 +112,11 @@ func createProjectInDir(path string) error {
 	}
 	// change dir and create mod file
 	if err := os.Chdir(path); err != nil {
-		log.Fatal((err))
+		return err
 	}
 	fmt.Println("creating mod file...")
 	if err := execAndWait("go", "mod", "init", path); err != nil {
-		log.Fatal(err)
+		return err
 	}
 	fmt.Println("New ponzu project created at", path)
 
@@ -162,10 +124,10 @@ func createProjectInDir(path string) error {
 	if err != nil {
 		return err
 	}
-	if _, err := f.WriteString("require github.com/padraicbc/ponzu/dynamic/content  v0.0.0\n" +
+	if _, err := f.WriteString("require github.com/padraicbc/ponzu/content  v0.0.0\n" +
 		"// Hack so we always use local generated on side effect import\n" +
-		"replace github.com/padraicbc/ponzu/dynamic/content => ./dynamic/content"); err != nil {
-		log.Fatal(err)
+		"replace github.com/padraicbc/ponzu/dynamic/content => ./content"); err != nil {
+		return err
 	}
 
 	return nil
