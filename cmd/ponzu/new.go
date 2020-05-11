@@ -126,7 +126,7 @@ func createProjectInDir(path string) error {
 	}
 	if _, err := f.WriteString("require github.com/padraicbc/ponzu/content  v0.0.0\n" +
 		"// Hack so we always use local generated on side effect import\n" +
-		"replace github.com/padraicbc/ponzu/dynamic/content => ./content"); err != nil {
+		"replace github.com/padraicbc/ponzu/content => ./content"); err != nil {
 		return err
 	}
 
