@@ -3,7 +3,7 @@
 * ~~I have not done anything with addons so that needs to be checked.~~
 * Possible to use `export GO111MODULE=on` and `export GOFLAGS=-mod=vendor` for another approach but this works for now anyway.
 * The `replace` hack means we always use the generated models to render as opposed to going to the vendor or repo.
-* Need to do a few checks plus remove/change the logic for cloning local files to handle modules like `ponzu@v1.0.0`...
+* Need to change the logic for cloning local files to handle modules like `ponzu@v1.0.0`...
 
 ![My friend, "Gotoro"](ponzu-banner.png)
 
