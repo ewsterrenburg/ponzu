@@ -1,3 +1,7 @@
+input:required:invalid {
+    border-bottom: solid 2px rgba(200, 0, 0, 0.85) !important;
+}
+
 .navbar-fixed {
     z-index: 10000 !important;
 }
@@ -14,7 +18,7 @@
 
 .admin-ui {
     width: 95%;
-    max-width: 1300px;    
+    max-width: 1300px;
     margin: 1% auto;
 }
 
@@ -44,7 +48,8 @@
     padding: 0px !important;
 }
 
-ul.posts li, ul.users li {
+ul.posts li,
+ul.users li {
     display: block;
     margin: 0 0 20px 0;
     padding: 0 0 20px 0 !important;
@@ -81,7 +86,8 @@ li a:hover {
     transition: color 0.3s ease;
 }
 
-a.new-post, a.export-post {
+a.new-post,
+a.export-post {
     margin: 0.5rem 0 1rem 0.75rem;
 }
 
@@ -116,16 +122,16 @@ select.browser-default {
 .file-input .preview {
     display: inline-block;
     position: relative;
-    margin: 0.5rem 0 1rem 0;        
-    background-color:#fff; 
+    margin: 0.5rem 0 1rem 0;
+    background-color: #fff;
     border: 1px solid #e0e0e0;
-    border-radius: 2px;   
+    border-radius: 2px;
 }
 
 .file-input .preview .img-clip {
     overflow: hidden;
     max-width: 300px;
-    margin: 10px;    
+    margin: 10px;
 }
 
 .file-input .preview img {
@@ -147,31 +153,35 @@ select.browser-default {
 .file-input .preview:hover .reset {
     opacity: 1;
     transition: opacity 0.3s ease;
-}    
+}
 
 footer p {
     color: #9e9e9e;
 }
 
-.post-controls .save-post, .post-controls .approve-post {
+.post-controls .save-post,
+.post-controls .approve-post {
     margin-left: 10px;
 }
 
 span.post-detail {
     font-size: 11px;
     color: #9e9e9e;
-    font-style: italic;  
+    font-style: italic;
 }
 
-.quick-delete-post, .delete-user {
+.quick-delete-post,
+.delete-user {
     display: none;
 }
 
-li:hover .quick-delete-post, li:hover .delete-user {
+li:hover .quick-delete-post,
+li:hover .delete-user {
     display: inline-block;
 }
 
-.quick-delete-post span, .delete-user span {
+.quick-delete-post span,
+.delete-user span {
     cursor: pointer;
     color: #F44336;
     text-transform: uppercase;
@@ -190,7 +200,8 @@ li:hover .quick-delete-post, li:hover .delete-user {
     top: -10px;
 }
 
-tr.default-fields, tr.editor-fields {
+tr.default-fields,
+tr.editor-fields {
     margin-top: 20px;
     margin-bottom: 20px;
 }

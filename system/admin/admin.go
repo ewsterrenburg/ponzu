@@ -408,16 +408,16 @@ func UsersList(req *http.Request) ([]byte, error) {
         <form class="row" enctype="multipart/form-data" action="/admin/configure/users" method="post">
             <div class="col s9">
                 <label class="active">Email Address</label>
-                <input type="email" name="email" value=""/>
+                <input type="email" name="email" value="" required />
             </div>
 
             <div class="col s9">
                 <label class="active">Password</label>
-                <input type="password" name="password"/>
+                <input type="password" name="password" required/>
             </div>
 
             <div class="col s9">            
-                <button class="btn waves-effect waves-light green right" type="submit">Add User</button>
+                <button class="btn waves-effect waves-light green right required" type="submit">Add User</button>
             </div>   
         </form>        
 
@@ -438,6 +438,28 @@ func UsersList(req *http.Request) ([]byte, error) {
     `
 	script := `
     <script>
+
+    $(function() {
+        var submitButton = $(".required").attr("disabled", true);
+        console.log(77777777);
+         
+        $("form :input[required]").keyup(function () {
+            var valid = true;
+            
+            $.each($("form :input[required]"), function (index, value) {
+                if(!$(value).val()){
+                   valid = false;
+                }
+            });
+            if(valid){
+                $(submitButton).attr("disabled", false);
+            } 
+            else{
+                $(submitButton).attr("disabled", true);
+            }
+        });
+        });
+
         $(function() {
             var del = $('.delete-user.__ponzu span');
             del.on('click', function(e) {

@@ -370,12 +370,26 @@ func generateContentType(args []string) error {
 		return err
 	}
 
-	contentDir := filepath.Join(pwd, "dynamic", "content")
-	filePath := filepath.Join(contentDir, fileName)
+	filePath := filepath.Join(pwd, "dynamic", "content", fileName)
 
 	if _, err := os.Stat(filePath); !os.IsNotExist(err) {
-		localFile := filepath.Join("dynamic", "content", fileName)
-		return fmt.Errorf("Please remove '%s' before executing this command", localFile)
+		fmt.Printf("File %s exists!\nPress [Y/y] to overwrite or any key to cancel: ", filePath)
+
+		ans, err := getAnswer()
+		if err != nil {
+			return err
+		}
+
+		ans = strings.ToLower(strings.TrimSpace(ans))
+		if ans != "y" {
+			return fmt.Errorf("Need to manually remove '%s' before executing this command", filePath)
+
+		}
+		if os.Remove(filePath) != nil {
+			fmt.Println(err)
+			return err
+		}
+
 	}
 
 	// parse type info from args

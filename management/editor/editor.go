@@ -143,8 +143,30 @@ func Form(post Editable, fields ...Field) ([]byte, error) {
 
 	script := `
 <script>
-	$(function() {
-		var form = $('form'),
+	
+$(function() {
+	var inps = $("form :input[required]");
+	if (!inps.length){
+		return;
+	}
+	
+	var submitButton = $(".save-post").attr("disabled", true);
+	$("form :input[required]").keyup(function () {
+		var valid = true;
+		
+		$.each(inps, function (index, value) {
+			if(!$(value).val()){
+			   valid = false;
+			}
+		});
+		if(valid){
+			$(submitButton).attr("disabled", false);
+		} 
+		else{
+			$(submitButton).attr("disabled", true);
+		}
+	});
+		    var form = $('form'),
 			save = form.find('button.save-post'),
 			del = form.find('button.delete-post'),
 			external = form.find('.post-controls.external'),
@@ -171,6 +193,7 @@ func Form(post Editable, fields ...Field) ([]byte, error) {
 
 		save.on('click', function(e) {
 			e.preventDefault();
+			
 
 			if (getParam('status') === 'pending') {
 				var action = form.attr('action');

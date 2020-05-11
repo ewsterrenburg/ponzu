@@ -92,7 +92,7 @@ func File(fieldName string, p interface{}, attrs map[string]string) []byte {
 			<div class="file-field input-field">
 				<div class="btn">
 					<span>Upload</span>
-					<input class="upload" type="file">
+					<input class="upload" type="file" multiple>
 				</div>
 				<div class="file-path-wrapper">
 					<input class="file-path validate" placeholder="` + attrs["label"] + `" type="text">
